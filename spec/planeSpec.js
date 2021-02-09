@@ -16,11 +16,12 @@ describe("Plane", () => {
 
   it("can land at an airport", () => {
     plane.land(airport);
-    expect(airport.clearForLanding).toHaveBeenCalledWith(plane);
+    expect(airport.clearForLanding).toHaveBeenCalledWith(plane.name);
   });
 
   it("can take off from an airport", () => {
+    plane.land
     plane.takeoff(airport);
-    expect(airport.clearForTakeOff).toHaveBeenCalledWith(plane);
+    expect(airport.clearForTakeOff).toHaveBeenCalledWith(plane.name);
   });
 });
