@@ -34,4 +34,12 @@ describe("featureTest", function () {
 		expect(airport.planes()).not.toContain(plane2.name);
 		expect(airport.planes()).toContain(plane.name);
 	});
+
+	it('blocks tackoff when weather is stormy', () => {
+		plane.land(airport)
+		spyOn(airport, 'isStormy').and.returnValue(true);
+		expect(function(){ plane.takeoff(airport);}).toThrowError('cannot takeoff during storm');
+		expect(airport.planes()).toContain(plane.name);
+	});
+
 });

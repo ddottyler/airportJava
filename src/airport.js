@@ -12,7 +12,15 @@ class Airport {
   };
 
   clearForTakeOff(plane) {
+    if(this.isStormy()){
+      throw new Error('cannot takeoff during storm');
+    }
     let planeIndex = this._hangar.indexOf(plane);
     this._hangar.splice(planeIndex, 1)
   }
+
+  isStormy() {
+    return false;
+  }
+
 };
