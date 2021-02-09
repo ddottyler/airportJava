@@ -4,4 +4,8 @@ class Plane {
     airport.clearForLanding(this)
   };
 
+  takeoff(airport) {
+    airport.clearForTakeOff(this)
+  }
+
 };
