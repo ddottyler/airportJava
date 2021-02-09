@@ -1,8 +1,10 @@
 describe("Plane", () => {
   var plane;
+	var airport;
 
   beforeEach(() => {
     plane = new Plane();
+		airport = jasmine.createSpyObj('airport', ['clearForLanding']);
   });
 
   it("is an instance of plane", () => {
@@ -10,6 +12,8 @@ describe("Plane", () => {
   });
 
   it("can land at an airport", () => {
-    expect(plane.land).not.toBeUndefined();
+		plane.land(airport)
+    expect(airport.clearForLanding).toHaveBeenCalledWith(plane);
   });
+
 });
