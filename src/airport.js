@@ -1,1 +1,11 @@
-class Airport {}
+class Airport {
+
+  constructor() {
+    this._hangar = []
+  }
+
+  planes() {
+    return []
+  }
+
+}
