@@ -1,15 +1,13 @@
 class Plane {
 
-  constructor(name) {
-    this.name = name;
+  constructor() {
+      this.__location;
   }
-
   land(airport) {
-    airport.clearForLanding(this.name)
-  };
-
-  takeoff(airport) {
-    airport.clearForTakeOff(this.name)
+    airport.clearForLanding(this);
+    this.__location = airport;
   }
-
-};
+  takeoff(airport) {
+      this.__location.clearForTakeOff();
+  }
+}

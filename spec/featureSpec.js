@@ -1,45 +1,45 @@
-describe("featureTest", function () {
+'use strict';
+
+describe('Feature Test: ', function(){
   var plane;
-	var plane2;
   var airport;
 
-  beforeEach(function () {
-    plane = new Plane('plane');
-	  plane2 = new Plane('plane2');
+  beforeEach(function(){
+    plane = new Plane();
     airport = new Airport();
   });
 
-  it("planes can be instructed to land at an airport", function () {
-    plane.land(airport);
-    expect(airport.planes()).toContain(plane.name);
+  describe('under normal conditions',function(){
+    beforeEach(function(){
+      spyOn(Math,'random').and.returnValue(0);
+    });
+
+    it('planes can be instructed to land at an airport', function(){
+      plane.land(airport);
+      expect(airport.planes()).toContain(plane);
+    });
+
+    it('planes can be instructed to takeoff', function(){
+      plane.land(airport)
+      plane.takeoff();
+      expect(airport.planes()).not.toContain(plane);
+    });
   });
 
-  it("planes can be instructed to takeoff at an airport", () => {
-		plane.land(airport)
-    plane.takeoff(airport);
-    expect(airport.planes()).not.toContain(plane.name);
+  describe('under stormy conditions',function(){
+
+    it('blocks takeoff when weather is stormy', function(){
+      spyOn(Math,'random').and.returnValue(0);
+      plane.land(airport)
+      spyOn(airport._weather,'isStormy').and.returnValue(true);
+      expect(function(){ plane.takeoff();}).toThrowError('cannot takeoff during storm');
+      expect(airport.planes()).toContain(plane);
+    });
+
+    it('blocks landing when weather is stormy', function(){
+      spyOn(Math,'random').and.returnValue(1);
+      expect(function(){ plane.land(airport); }).toThrowError('cannot land during storm');
+      expect(airport.planes()).toEqual([]);
+    });
   });
-
-	it("multiple planes can land at the airport", () => {
-		plane.land(airport);
-		plane2.land(airport);
-		expect(airport.planes().length).toEqual(2);
-	});
-
-	it("one plane can take off when there are multiple at the airport", () => {
-		plane.land(airport);
-		plane2.land(airport);
-		plane2.takeoff(airport);
-		expect(airport.planes().length).toEqual(1);
-		expect(airport.planes()).not.toContain(plane2.name);
-		expect(airport.planes()).toContain(plane.name);
-	});
-
-	it('blocks tackoff when weather is stormy', () => {
-		plane.land(airport)
-		spyOn(airport, 'isStormy').and.returnValue(true);
-		expect(function(){ plane.takeoff(airport);}).toThrowError('cannot takeoff during storm');
-		expect(airport.planes()).toContain(plane.name);
-	});
-
 });

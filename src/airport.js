@@ -1,26 +1,26 @@
-class Airport {
-  constructor() {
-    this._hangar = [];
-  }
+'use strict';
 
+class Airport{
+  constructor(weather) {
+    this._weather = typeof weather !== 'undefined' ? weather : new Weather();
+    this._hangar = []
+  }
   planes() {
     return this._hangar;
   }
-
   clearForLanding(plane) {
+    if(this._weather.isStormy()) {
+      throw new Error('cannot land during storm');
+    }
     this._hangar.push(plane);
   };
-
   clearForTakeOff(plane) {
-    if(this.isStormy()){
+    if(this._weather.isStormy()) {
       throw new Error('cannot takeoff during storm');
     }
-    let planeIndex = this._hangar.indexOf(plane);
-    this._hangar.splice(planeIndex, 1)
+    this._hangar = [];
   }
-
   isStormy() {
     return false;
   }
-
 };
